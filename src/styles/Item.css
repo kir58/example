@@ -1,0 +1,24 @@
+.wrapper {
+  margin-top: 50px;
+  display: flex;
+  justify-content: flex-start;
+}
+.img {
+  display: block;
+  height: 400px;
+  margin: auto 10px;
+}
+.information {
+  font-size: 18px;
+  width: 60%;
+  margin-top: 10px; 
+  margin-left: 50px;
+}
+
+.element {
+  padding-bottom: 30px;
+  line-height: 1.8;  
+}
+.element:first-child {
+  color: gray;
+}

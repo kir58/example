@@ -1,0 +1,52 @@
+.wrapper {
+  margin-top: 20px; 
+}
+.text {
+  padding: 8px 13px;
+  width: 300px;
+}
+.goods {
+  margin-top: 20px;
+}
+.list {
+  margin: 0px;
+  padding: 0px;
+  text-decoration: none;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.element {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 200px;
+  margin: 10px 0;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+.element:hover {
+  box-shadow: 0 10px 12px -8px green;
+}
+
+.name {
+  display: block;
+  padding: 10px;
+  text-align: center;
+}
+.picture {
+  display: block;
+  height: 200px;
+  margin: 10px auto;
+}
+.price {
+  display: block;
+  padding: 10px;
+  text-align: center;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+  text-align: inherit;
+}
