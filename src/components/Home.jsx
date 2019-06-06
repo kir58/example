@@ -1,68 +1,91 @@
 import React from "react";
 import styles from "../styles/Home.css";
-
-const debounce = (f, ms) => {
-  let timer = null;
-  return function (...args)  {
-    const onComplete = () => f.apply(this, args);
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(onComplete, ms);
-  };
-}
+import cn from "classnames";
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { current: 0, autoId: null, images: [
-      "http://иванхромов.рф/upload/resize_cache/iblock/07f/800_800_1/07fa4dc230b4819596d6e2dc31d64eb3.jpg",
-      "https://arsenalmusic.ru/upload/iblock/698/698d7fa9d1ca555f4b8214b26f25630d.jpg",
-      "http://i8.photo.2gis.com/main/branch/36/5067077861855608/common",
-      "https://igx.4sqi.net/img/general/original/20197376_e7xA4Q03Br_va4ts7rcisgWdG4_lKhLc-BTxbGZVb6s.jpg"
-      ]
+    this.state = {  
+      currentIndex: 0,
+      change: false,
+      nextIndex: 0,
+      images: [
+        "http://иванхромов.рф/upload/resize_cache/iblock/07f/800_800_1/07fa4dc230b4819596d6e2dc31d64eb3.jpg",
+        "https://arsenalmusic.ru/upload/iblock/698/698d7fa9d1ca555f4b8214b26f25630d.jpg",
+        "http://i8.photo.2gis.com/main/branch/36/5067077861855608/common",
+        "https://igx.4sqi.net/img/general/original/20197376_e7xA4Q03Br_va4ts7rcisgWdG4_lKhLc-BTxbGZVb6s.jpg"
+     ]
     };
   }
-   componentDidMount() {
-    const autoId = setInterval(this.handleRigthArrow, 4000);
-    this.setState({ autoId });
-  }
-
-  handleRigthArrow = (e) => {
-    if (e) {
-      clearInterval(this.state.autoId);
-    };
-    const index = this.state.current >= this.state.images.length - 1 ? 0 : this.state.current + 1;
-    this.setState({ current: index, auto: true }); 
-  }
-
-  handleLeftArrow = (e) => {
-    if (e) {
-      clearInterval(this.state.autoId);
-    };
-    const index = this.state.current < 1 ? this.state.images.length - 1 : this.state.current - 1; 
-    this.setState({ current: index });
+  handleChangeSlide = direction => () => {
+    const {currentIndex, images } = this.state;
+    const indexIncrement = currentIndex >= images.length - 1 ? 0 : currentIndex + 1;
+    const indexDecrement = currentIndex < 1 ? images.length - 1 : currentIndex - 1;
+    const upDateIndex = direction < 0 ? indexDecrement : indexIncrement;
+    this.setState({ change: true, nextIndex: upDateIndex  });
+    setTimeout(() => {
+      this.setState({
+        change: false,
+        currentIndex: upDateIndex,
+      });
+    }, 1000);
   }
   renderItems = () => {
-    const { images, current } = this.state;
-    const begin = current === 0 ? images[images.length - 1] : images[current - 1];
-    const end = current === images.length - 1 ? images[0] : images[current + 1];
-    return [begin, images[current], end].map((link, i) => (
-      <img src={link} className={`${styles.img} ${styles[`img${i}`]} `} key={link}/>
-    ))
-
+    const { images, currentIndex, change, nextIndex } = this.state;
+    const classImg = i => cn({
+      [styles.images]: true,
+      [styles.active]: currentIndex === i,
+      [styles.prev]: change && currentIndex === i,
+      [styles.next]: change && nextIndex === i,
+    });
+    return images.map((link, i) => (
+      <div className={classImg(i)} key={i} dataid={i}>
+        <img src={link} className={`${styles.img}`}/>
+        </div>
+    ));
+  }
+  renderRadios = () => {
+    const { images, currentIndex } = this.state;
+    return (
+      <div className={styles.radios} >
+        {images.map((el, i) => (
+        <div className={styles.radioWraper}  key={i}>
+          <input 
+              className={styles.radio}
+              type="radio"
+              name="radios"
+              id={i}
+              value={i}
+              checked={i == currentIndex}
+              onChange={this.handleChangeRadios}
+          />
+          <label className={styles.radioLabel} htmlFor={i}></label>
+        </div>
+        ))
+        }
+      </div>
+    );
+  
+  }
+  handleChangeRadios = (e) => {
+    const { value } = e.target;
+    this.setState({ change: true, nextIndex: Number(value)  });
+    setTimeout(() => {
+      this.setState({
+        change: false,
+        currentIndex: Number(value),
+      });
+    }, 1000);
   }
 
   render() {
     return (
       <div className={styles.wrapper}>
-        <h1 className={styles.title}>Welcome guys!</h1>
         <div className={styles.slider}>
-          <div className={styles.images}>
-            {this.renderItems()}
-          </div>
-          <input type="button" className={`${styles.carousel} ${styles.prev}`} onClick={debounce(this.handleLeftArrow, 300)} />
-          <input type="button" className={`${styles.carousel} ${styles.next}`} onClick={debounce(this.handleRigthArrow, 300)} />
+           {this.renderItems()}
+          <input type="button" className={`${styles.arrow} ${styles.leftArrow}`} onClick={this.handleChangeSlide(-1)} />
+          <input type="button" className={`${styles.arrow} ${styles.rightArrow}`} onClick={this.handleChangeSlide(1)} />
+           {this.renderRadios()}
         </div>
       </div>
     );
