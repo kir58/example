@@ -32,15 +32,15 @@ class Home extends React.Component {
   }
   renderItems = () => {
     const { images, currentIndex, change, nextIndex } = this.state;
-    const classImg = i => cn({
+    const getClassImg = i => cn({
       [styles.images]: true,
       [styles.active]: currentIndex === i,
       [styles.prev]: change && currentIndex === i,
       [styles.next]: change && nextIndex === i,
     });
     return images.map((link, i) => (
-      <div className={classImg(i)} key={i} dataid={i}>
-        <img src={link} className={`${styles.img}`}/>
+      <div className={getClassImg(i)} key={i}>
+        <img src={link} className={styles.img}/>
         </div>
     ));
   }
@@ -48,7 +48,7 @@ class Home extends React.Component {
     const { images, currentIndex } = this.state;
     return (
       <div className={styles.radios} >
-        {images.map((el, i) => (
+        {images.map((_, i) => (
         <div className={styles.radioWraper}  key={i}>
           <input 
               className={styles.radio}
