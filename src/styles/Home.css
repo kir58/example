@@ -6,7 +6,7 @@
   position: relative;
   margin: 0 auto;
   height: 500px;
-  width: 900px;
+  width: 100%;
   border: 1px solid black;
   overflow: hidden;
 }
@@ -24,7 +24,7 @@
 }
 .next {
   display: block;
-  opacity: 0.2;
+  opacity: 0.4;
 }
 .prev {
   display: block;
@@ -37,31 +37,45 @@
 
 .arrow {
   position: absolute;
-  border: none;
+  width: 60px;
+  height: 60px;
   top: calc(50% - 20px);
-  width: 40px;
-  height: 40px;
-  border-left: 5px solid red;
-  border-bottom: 5px solid red;
-  outline: none;
-  background: none;
-  opacity: 0.7;
-  transition: opacity 0.4s;
-  cursor: pointer;
+  border-radius: 50%;
+  background-color: rgb(0, 0, 0);
+  opacity: 0.8; 
+ 
 }
 
+.arrow::before {
+  content: "";
+  border: none;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-left: 5px solid rgb(255, 255, 255);
+  border-bottom: 5px solid rgb(255, 255, 255);
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+.arrow.leftArrow::before  {
+  transform: rotate(45deg);
+  margin-left: calc(50% - 8px);
+}
+.arrow.rightArrow::before {
+  transform: rotate(225deg);
+  margin-left: calc(50% - 18px);
+}
 .arrow:hover {
   opacity: 1;
 }
 
 .leftArrow {
   left: 5%;
-  transform: rotate(45deg);
 }
 
 .rightArrow{
   right: 5%;
-  transform: rotate(225deg);
 }
 
 .radios {
@@ -70,8 +84,8 @@
   justify-content: center;
   align-items: center;
   top: 90%;
-  background-color: black;
-  opacity: 0.6; 
+  background-color: rgb(0, 0, 0);
+  opacity: 0.8; 
   width: 100%;
   height: 10%;
 }
@@ -87,7 +101,8 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: green;
+  opacity: 1 !important;
+  background: black
 }
 .radioLabel {
   cursor: pointer;
@@ -97,8 +112,6 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-color: red;
+  background-color: rgb(197, 184, 184);
 }
-.radioLabel:checked {
-  background-color:  green;
-}
+

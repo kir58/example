@@ -1,13 +1,16 @@
 import React from "react";
 import styles from "../styles/Home.css";
 import cn from "classnames";
+import _ from "lodash";
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.timerId = null;
     this.state = {  
       currentIndex: 0,
       change: false,
+      autoplay: true,
       nextIndex: 0,
       images: [
         "http://иванхромов.рф/upload/resize_cache/iblock/07f/800_800_1/07fa4dc230b4819596d6e2dc31d64eb3.jpg",
@@ -16,6 +19,16 @@ class Home extends React.Component {
         "https://igx.4sqi.net/img/general/original/20197376_e7xA4Q03Br_va4ts7rcisgWdG4_lKhLc-BTxbGZVb6s.jpg"
      ]
     };
+  }
+  componentDidMount() {
+    this.timerId = setInterval(() => {
+      if (this.state.autoplay) {
+        this.handleChangeSlide(1)();
+      }
+    }, 5000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timerId);
   }
   handleChangeSlide = direction => () => {
     const {currentIndex, images } = this.state;
@@ -77,14 +90,26 @@ class Home extends React.Component {
       });
     }, 1000);
   }
+  pause = () => {
+    this.setState({ autoplay: false });
+  }
 
+  resume = () => {
+    this.setState({ autoplay: true });
+  }
   render() {
     return (
       <div className={styles.wrapper}>
-        <div className={styles.slider}>
+        <div className={styles.slider} onMouseEnter={this.pause} onMouseLeave={this.resume}>
            {this.renderItems()}
-          <input type="button" className={`${styles.arrow} ${styles.leftArrow}`} onClick={this.handleChangeSlide(-1)} />
-          <input type="button" className={`${styles.arrow} ${styles.rightArrow}`} onClick={this.handleChangeSlide(1)} />
+          <button 
+            className={`${styles.arrow} ${styles.leftArrow}`} 
+            onClick={_.debounce(this.handleChangeSlide(-1), 500)}
+          />
+          <button 
+            className={`${styles.arrow} ${styles.rightArrow}`}
+            onClick={_.debounce(this.handleChangeSlide(1), 500)} 
+          />
            {this.renderRadios()}
         </div>
       </div>
