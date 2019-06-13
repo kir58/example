@@ -3,9 +3,8 @@ import Header from "./Header";
 import Catalog from "./Catalog";
 import Item from "./Item";
 import  styles from '../styles/App.css';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router, Route } from "react-router-dom";
 import Home from "./Home";
-import Footer from "./Footer";
 
 class App extends Component {
 	render() {
