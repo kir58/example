@@ -1,6 +1,6 @@
 import React from "react";
 import "@babel/polyfill";
-import styles from "../styles/Catalog.css";
+import styles from "./Catalog.css";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 

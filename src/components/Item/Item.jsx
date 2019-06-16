@@ -1,6 +1,6 @@
 import React from "react";
 import axios from 'axios';
-import styles from "../styles/Item.css";
+import styles from "./Item.css";
 
 class Item extends React.Component {
   constructor(props) {

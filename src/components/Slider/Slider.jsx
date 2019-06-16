@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../styles/Home.css";
+import styles from "./Slider.css";
 import cn from "classnames";
-import _ from "lodash";
+import { debounce }from "lodash";
 
 class Home extends React.Component {
   constructor(props) {
@@ -12,13 +12,6 @@ class Home extends React.Component {
       change: false,
       autoplay: true,
       nextIndex: 0,
-      images: [
-        "http://www.guidebook.by/image/1538129107_600.jpg",
-        "https://arsenalmusic.ru/upload/iblock/698/698d7fa9d1ca555f4b8214b26f25630d.jpg",
-        "https://i7.photo.2gis.com/images/branch/16/2251799835033407_504b.jpg",
-        "https://i7.photo.2gis.com/images/branch/40/5629499537599847_52e7.jpg",
-        "https://i7.photo.2gis.com/images/branch/107/15058911262255178_f73e.jpg"
-     ]
     };
   }
   componentDidMount() {
@@ -32,7 +25,8 @@ class Home extends React.Component {
     clearInterval(this.timerId);
   }
   handleChangeSlide = direction => () => {
-    const {currentIndex, images } = this.state;
+    const { currentIndex } = this.state;
+    const { images } = this.props;
     const indexIncrement = currentIndex >= images.length - 1 ? 0 : currentIndex + 1;
     const indexDecrement = currentIndex < 1 ? images.length - 1 : currentIndex - 1;
     const upDateIndex = direction < 0 ? indexDecrement : indexIncrement;
@@ -45,7 +39,8 @@ class Home extends React.Component {
     }, 500);
   }
   renderItems = () => {
-    const { images, currentIndex, change, nextIndex } = this.state;
+    const { currentIndex, change, nextIndex } = this.state;
+    const { images } = this.props;
     const getClassImg = i => cn({
       [styles.images]: true,
       [styles.active]: currentIndex === i,
@@ -58,8 +53,21 @@ class Home extends React.Component {
       </div>
     ));
   }
+  
+  handleChangeRadios = e => {
+    const { value } = e.target;
+    this.setState({ change: true, nextIndex: Number(value)  });
+    setTimeout(() => {
+      this.setState({
+        change: false,
+        currentIndex: Number(value),
+      });
+    }, 500);
+  }
+
   renderRadios = () => {
-    const { images, currentIndex } = this.state;
+    const { currentIndex } = this.state;
+    const { images } = this.props;
     return (
       <div className={styles.radios} >
         {images.map((_, i) => (
@@ -81,16 +89,7 @@ class Home extends React.Component {
     );
   
   }
-  handleChangeRadios = e => {
-    const { value } = e.target;
-    this.setState({ change: true, nextIndex: Number(value)  });
-    setTimeout(() => {
-      this.setState({
-        change: false,
-        currentIndex: Number(value),
-      });
-    }, 500);
-  }
+
   pause = () => {
     this.setState({ autoplay: false });
   }
@@ -100,19 +99,17 @@ class Home extends React.Component {
   }
   render() {
     return (
-      <div className={styles.wrapper}>
-        <div className={styles.slider} onMouseEnter={this.pause} onMouseLeave={this.resume}>
-           {this.renderItems()}
-          <button 
-            className={`${styles.arrow} ${styles.leftArrow}`} 
-            onClick={_.debounce(this.handleChangeSlide(-1), 500)}
-          />
-          <button 
-            className={`${styles.arrow} ${styles.rightArrow}`}
-            onClick={_.debounce(this.handleChangeSlide(1), 500)} 
-          />
-           {this.renderRadios()}
-        </div>
+      <div className={styles.slider} onMouseEnter={this.pause} onMouseLeave={this.resume}>
+          {this.renderItems()}
+        <button 
+          className={`${styles.arrow} ${styles.leftArrow}`} 
+          onClick={debounce(this.handleChangeSlide(-1), 500)}
+        />
+        <button 
+          className={`${styles.arrow} ${styles.rightArrow}`}
+          onClick={debounce(this.handleChangeSlide(1), 500)} 
+        />
+          {this.renderRadios()}
       </div>
     );
   }

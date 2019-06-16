@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Header from "./Header";
-import Catalog from "./Catalog";
-import Item from "./Item";
-import  styles from '../styles/App.css';
+import Header from "../Header/Header";
+import Catalog from "../Catalog/Catalog";
+import Item from "../Item/Item";
+import Home from "../Home/Home";
+import  styles from './App.css';
 import { HashRouter as Router, Route  } from "react-router-dom";
-import Home from "./Home";
 
 class App extends Component {
 	render() {
