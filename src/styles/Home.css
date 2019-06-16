@@ -7,7 +7,8 @@
   margin: 0 auto;
   height: 500px;
   width: 100%;
-  border: 1px solid black;
+  background: rgb(0, 0, 0);
+  border: 1px solid rgb(0, 0, 0);
   overflow: hidden;
 }
 .images {
@@ -16,19 +17,31 @@
   white-space: nowrap;
   height: 100%;
   width: 100%;
-  transition: 1s;
   
 }
 .active {
   display: block;
+  transition:  1s ease;
 }
 .next {
   display: block;
-  opacity: 0.4;
+  opacity: 0;
+	-moz-transform: scale(0.6);
+    -ms-transform: scale(0.6);
+    -webkit-transform: scale(0.6);
+    -o-transform: scale(0.6);
+  transform: scale(0.6);
+  transition-delay: 0.5s;
+	
 }
 .prev {
   display: block;
-  opacity: 0.2;
+  opacity: 0;
+	-moz-transform: scale(0.6);
+    -ms-transform: scale(0.6);
+    -webkit-transform: scale(0.6);
+    -o-transform: scale(0.6);
+	transform: scale(0.6);
 }
 .img {
   width: 100%;

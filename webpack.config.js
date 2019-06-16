@@ -1,13 +1,14 @@
+
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const combineLoaders = require("webpack-combine-loaders");
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.join(__dirname, "/dist"),
-    publicPath: "/",
-    filename: "index-bundle.js"
+    filename: "index-bundle.js",
   },
   resolve: {
     extensions: [".js", ".jsx"]
@@ -43,6 +44,29 @@ module.exports = {
       disableDotRule: true
     },
     port: 3000
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new UglifyJSPlugin({
+        sourceMap: true,
+        uglifyOptions: {
+          compress: {
+            unused: false,
+            dead_code: false,
+            join_vars: true,
+            drop_console: true,
+            comparisons: true,
+            loops: true,
+            drop_debugger: true,
+          },
+          "warnings": true,
+          output: {
+            comments: false,
+          },
+        },
+      }),
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({

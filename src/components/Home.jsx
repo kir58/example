@@ -13,10 +13,11 @@ class Home extends React.Component {
       autoplay: true,
       nextIndex: 0,
       images: [
-        "http://иванхромов.рф/upload/resize_cache/iblock/07f/800_800_1/07fa4dc230b4819596d6e2dc31d64eb3.jpg",
+        "http://www.guidebook.by/image/1538129107_600.jpg",
         "https://arsenalmusic.ru/upload/iblock/698/698d7fa9d1ca555f4b8214b26f25630d.jpg",
-        "http://i8.photo.2gis.com/main/branch/36/5067077861855608/common",
-        "https://igx.4sqi.net/img/general/original/20197376_e7xA4Q03Br_va4ts7rcisgWdG4_lKhLc-BTxbGZVb6s.jpg"
+        "https://i7.photo.2gis.com/images/branch/16/2251799835033407_504b.jpg",
+        "https://i7.photo.2gis.com/images/branch/40/5629499537599847_52e7.jpg",
+        "https://i7.photo.2gis.com/images/branch/107/15058911262255178_f73e.jpg"
      ]
     };
   }
@@ -41,7 +42,7 @@ class Home extends React.Component {
         change: false,
         currentIndex: upDateIndex,
       });
-    }, 1000);
+    }, 500);
   }
   renderItems = () => {
     const { images, currentIndex, change, nextIndex } = this.state;
@@ -54,7 +55,7 @@ class Home extends React.Component {
     return images.map((link, i) => (
       <div className={getClassImg(i)} key={i}>
         <img src={link} className={styles.img}/>
-        </div>
+      </div>
     ));
   }
   renderRadios = () => {
@@ -80,7 +81,7 @@ class Home extends React.Component {
     );
   
   }
-  handleChangeRadios = (e) => {
+  handleChangeRadios = e => {
     const { value } = e.target;
     this.setState({ change: true, nextIndex: Number(value)  });
     setTimeout(() => {
@@ -88,7 +89,7 @@ class Home extends React.Component {
         change: false,
         currentIndex: Number(value),
       });
-    }, 1000);
+    }, 500);
   }
   pause = () => {
     this.setState({ autoplay: false });

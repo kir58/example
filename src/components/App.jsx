@@ -3,14 +3,14 @@ import Header from "./Header";
 import Catalog from "./Catalog";
 import Item from "./Item";
 import  styles from '../styles/App.css';
-import { HashRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router, Route  } from "react-router-dom";
 import Home from "./Home";
 
 class App extends Component {
 	render() {
 		return (
 			<div className={styles.container}>
-				<Router>
+				<Router basename={process.env.PUBLIC_URL}>
 					<Header />
 					<Route path="/" exact component={Home} />
 					<Route path="/catalog" exact component={Catalog} />
