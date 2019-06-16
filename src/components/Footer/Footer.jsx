@@ -6,7 +6,7 @@ export default  () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.information}>
-        ©2019, «Gitarkaforyou». Все цены указаны в рублях — Р. Наличие товара и цены на негоуточняйте у наших менеджеров.
+        ©2019, «GitarkaForYou». Все цены указаны в рублях — Р. Наличие товара и цены на него уточняйте у наших менеджеров.
       </div>
     </div>
   );
