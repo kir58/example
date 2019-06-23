@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Header.css";
 import { NavLink } from "react-router-dom";
+import Logo from "../../assets/logo.png";
 
 export default  () => {
   return (
@@ -8,7 +9,7 @@ export default  () => {
       <ul className={styles.list}>
         <li className={styles.item}>
           <NavLink to="/" >
-            <img className={styles.picture} src="https://cdn.pixabay.com/photo/2017/05/05/16/37/logo-2287665_1280.png" />
+            <img className={styles.picture} src={Logo} />
           </NavLink>
           </li>
         <li className={styles.item}>

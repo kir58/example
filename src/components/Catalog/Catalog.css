@@ -4,7 +4,9 @@
 .text {
   padding: 8px 13px;
   width: 300px;
+  border: 1px solid  #DDDDDD;
 }
+
 .goods {
   margin-top: 20px;
 }
@@ -49,4 +51,14 @@
   color: inherit;
   text-decoration: none;
   text-align: inherit;
+}
+
+@media screen and (max-width: 480px) {
+  .list {
+    justify-content: center;
+  }
+  .text {
+    display: block;
+    margin: 0 auto;
+  }
 }

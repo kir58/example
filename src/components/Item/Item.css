@@ -2,7 +2,9 @@
   margin-top: 50px;
   display: flex;
   justify-content: flex-start;
+  flex-wrap: wrap;
 }
+
 .img {
   display: block;
   height: 400px;
@@ -21,4 +23,14 @@
 }
 .element:first-child {
   color: gray;
+}
+
+@media screen and (max-width: 480px) {
+  .wrapper {
+    justify-content: center;
+  }
+  .information {
+    margin-top: 15px;
+    width: 100%;
+  }
 }
