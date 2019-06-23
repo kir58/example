@@ -1,6 +1,8 @@
 import React from "react";
 import "@babel/polyfill";
 import styles from "./Catalog.css";
+import Loader from "../Loader/Loader";
+import Footer from "../Footer/Footer";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 
@@ -15,7 +17,7 @@ const getFilteredList = (arr, text) => {
 class Catalog extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: [], texInput: "" };
+    this.state = { items: [], texInput: "", fetchingState: "none" };
   }
 
   componentDidMount() {
@@ -23,8 +25,15 @@ class Catalog extends React.Component {
   }
 
   getItems = async () => {
-    const items = await axios.get('https://anton-sergeenkov.ru/app/json-server/index.php');
-    this.setState({ items: items.data });
+    this.setState({ fetchingState: "requested" });
+    try {
+      const items = await axios.get('https://anton-sergeenkov.ru/app/json-server/index.php');
+      this.setState({ items: items.data, fetchingState: "finished" });
+    } catch (e) {
+      this.setState({ fetchingState: "failed" });
+      console.log(e);
+    }
+ 
   }
 
   handleChange = (e) => {
@@ -52,21 +61,31 @@ class Catalog extends React.Component {
     );
   } 
   render() {
+    const { fetchingState } = this.state;
+    if (fetchingState === "requested") {
+      return <Loader />
+    }
+    if (fetchingState === "failed") {
+      return <div>Reload the page please</div>
+    }
     return (
-      <div className={styles.wrapper}>
-        <form>
-          <input 
-            type="text" 
-            className={styles.text} 
-            placeholder="Enter the name of the guitar" 
-            value={this.state.texInput}
-            onChange={this.handleChange}
-          />
-        </form>
-        <div className={styles.goods}>
-          {this.renderList()}
+      <React.Fragment>
+        <div className={styles.wrapper}>
+          <form>
+            <input 
+              type="text" 
+              className={styles.text} 
+              placeholder="Enter the name of the guitar" 
+              value={this.state.texInput}
+              onChange={this.handleChange}
+            />
+          </form>
+          <div className={styles.goods}>
+            {this.renderList()}
+          </div>
         </div>
-      </div>
+       <Footer />
+      </React.Fragment>
     )
   }
 }

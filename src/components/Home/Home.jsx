@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Home.css";
-import Slider from "../Slider/Slider"
+import Slider from "../Slider/Slider";
+import Footer from "../Footer/Footer";
 
 const images = [
   "http://www.guidebook.by/image/1538129107_600.jpg",
@@ -11,7 +12,10 @@ const images = [
 ];
 
 export default () => (
-  <div className={styles.wrapper}>
-     <Slider images={images} />
-  </div>
+  <React.Fragment>
+    <div className={styles.wrapper}>
+      <Slider images={images} />
+    </div>
+    <Footer />
+  </React.Fragment>
 );
