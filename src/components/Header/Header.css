@@ -5,7 +5,9 @@
 .list {
   margin: 0px;
   padding: 0px;
+  width: 100%;
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   list-style: none;
 }
@@ -20,6 +22,9 @@
   font-weight: 700;
   color: #a3a3a3;
   cursor: pointer;
+}
+.item:last-child {
+  margin-left: auto;
 }
 .link {
   color: inherit;

@@ -1,9 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
 import axios from 'axios';
 import Loader from "../Loader/Loader";
 import Footer from "../Footer/Footer";
 import styles from "./Item.css";
+import * as actions from "../../actions";
 
+const actionCreators = {
+  addGood: actions.addGood
+}
 class Item extends React.Component {
   constructor(props) {
     super(props);
@@ -24,6 +29,13 @@ class Item extends React.Component {
       console.log(e);
     }
   }
+
+  handleAddGoodToBasket = () => {
+    const { addGood } = this.props;
+    const { item } = this.state;
+    console.log(item);
+    addGood({ item });
+  }
   render() {
     const { fetchingState, item } = this.state;
     const { name, img, price, description } = item;
@@ -37,8 +49,9 @@ class Item extends React.Component {
     return (
       <React.Fragment>
         <div className={styles.wrapper}>
-          <div>
+          <div className={styles.good}>
             <img className={styles.img} src={img} />
+            <button className={styles.add} onClick={this.handleAddGoodToBasket}>Добавить в корзину</button>
           </div>
           <div className={styles.information}>
             <div className={styles.element}>{name}</div>
@@ -51,4 +64,4 @@ class Item extends React.Component {
     );
   }
 }
-export default Item;
+export default connect(null, actionCreators)(Item);
