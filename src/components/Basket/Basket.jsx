@@ -1,16 +1,52 @@
 import React from "react";
 import styles from "./Basket.css";
+import * as actions from "../../actions";
+import { connect } from "react-redux";
 
-export default  () => {
+const mapStateToProps = state => ({
+  basket: state.basket
+});
+
+const actionCreators = {
+  removeGood: actions.removeGood
+};
+
+const getNumber = str => Number(str.split(' ').join(''));
+
+const Basket = ({ basket, removeGood }) => {
+  const sum = basket.reduce((acc, { price }) => acc + getNumber(price), 0);
+
+  const handleRemoveGood = id => () => {
+    removeGood({ id });
+    localStorage.removeItem(id);
+  }
+  const renderGoods = () => (
+    <ul className={styles.goods}>
+      {basket.map(good => (
+        <li key={good.id} className={styles.good}>
+          <div className={styles.good_item}>
+              <img className={styles.img} src={good.img} />
+              <div className={styles.information}>
+                <div>{good.name}</div>
+                <button onClick={handleRemoveGood(good.id)}>Удалить товар</button>
+            </div>
+          </div>
+          <div className={styles.amount}>1</div>
+          <div className={styles.price}>{good.price}</div>
+        </li>
+      ))}
+    </ul>
+  )
   return (
     <div className={styles.wrapper}>
-      <ul className={styles.list}>
-        <li>№</li>
-        <li>Описание</li>
-        <li>Кол-во</li>
-        <li>Цена</li>
-        <li>Сумма</li>
+      <ul className={styles.caption}>
+        <li className={styles.caption_good}>Товар</li>
+        <li className={styles.caption_amount}>Кол-во</li>
+        <li className={styles.caption_price}>Цена</li>
       </ul>
+      {renderGoods()}
+      <div className={styles.sum}>{`Сумма: ${sum}`}</div>
     </div>
   );
 }
+export default connect(mapStateToProps, actionCreators)(Basket)

@@ -14,6 +14,11 @@ const basket = handleActions(
     ) {
       return state.filter(g => g.id !== id);
     },
+    [actions.getGoods](
+      state, { payload: { basket }}
+    ) {
+      return basket;
+    },
   }, []
 );
 export default combineReducers({ basket });

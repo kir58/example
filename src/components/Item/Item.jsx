@@ -9,6 +9,7 @@ import * as actions from "../../actions";
 const actionCreators = {
   addGood: actions.addGood
 }
+
 class Item extends React.Component {
   constructor(props) {
     super(props);
@@ -33,7 +34,7 @@ class Item extends React.Component {
   handleAddGoodToBasket = () => {
     const { addGood } = this.props;
     const { item } = this.state;
-    console.log(item);
+    localStorage.setItem(item.id, JSON.stringify(item));
     addGood({ item });
   }
   render() {
