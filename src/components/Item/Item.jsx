@@ -34,8 +34,9 @@ class Item extends React.Component {
   handleAddGoodToBasket = () => {
     const { addGood } = this.props;
     const { item } = this.state;
-    localStorage.setItem(item.id, JSON.stringify(item));
-    addGood({ item });
+    const updateItem = { amount: 1, ...item }
+    localStorage.setItem(item.id, JSON.stringify(updateItem));
+    addGood({ item: updateItem });
   }
   render() {
     const { fetchingState, item } = this.state;

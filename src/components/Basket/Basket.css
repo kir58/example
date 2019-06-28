@@ -62,7 +62,10 @@
 	width: 20%;
 	text-align: center;
 }
-
+.number {
+	width: 20px;
+	text-align: center;
+}
 .price {
 	width: 20%;
 	display: flex;

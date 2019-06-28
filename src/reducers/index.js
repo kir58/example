@@ -19,6 +19,11 @@ const basket = handleActions(
     ) {
       return basket;
     },
+    [actions.changeAmount](
+      state, { payload: { id, amount, symbol }}
+    ) {
+      return state.map(g => g.id === id ? { ...g, amount: g.amount + symbol } : g);
+    }
   }, []
 );
 export default combineReducers({ basket });
