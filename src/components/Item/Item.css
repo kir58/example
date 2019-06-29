@@ -22,17 +22,25 @@
   line-height: 1.8;  
 }
 .element:first-child {
-  color: gray;
+  color: rgb(95, 94, 94);
 }
 .add {
-  padding: 10px;
-  margin-top: 20px;
-  border: 1px solid;
+  padding: 15px;
+  cursor: pointer;
+  background-color: rgb(233, 2, 2);
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  width: 200px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
 }
-.good {
-  /* border: 1px solid;  */
+.gotobasket {
+  display: block;
+  text-decoration: none;
+  width: 160px;
+  text-align: center;
+  background-color: rgb(6, 129, 6);
 }
 
 @media screen and (max-width: 480px) {

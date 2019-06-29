@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 import axios from 'axios';
 import Loader from "../Loader/Loader";
 import Footer from "../Footer/Footer";
@@ -10,6 +11,9 @@ const actionCreators = {
   addGood: actions.addGood
 }
 
+const mapStateToProps = state => ({
+  basket: state.basket
+});
 class Item extends React.Component {
   constructor(props) {
     super(props);
@@ -40,7 +44,8 @@ class Item extends React.Component {
   }
   render() {
     const { fetchingState, item } = this.state;
-    const { name, img, price, description } = item;
+    const { name, img, price, description, id } = item;
+    const { basket } = this.props;
 
     if (fetchingState === "requested") {
       return <Loader />
@@ -51,14 +56,16 @@ class Item extends React.Component {
     return (
       <React.Fragment>
         <div className={styles.wrapper}>
-          <div className={styles.good}>
+          <div>
             <img className={styles.img} src={img} />
-            <button className={styles.add} onClick={this.handleAddGoodToBasket}>Добавить в корзину</button>
           </div>
           <div className={styles.information}>
             <div className={styles.element}>{name}</div>
             <div className={styles.element}>{price} RUB</div>
             <div className={styles.element}>{description}</div>
+            {basket.some(g => g.id === id) ?
+            <NavLink to="/basket" className={`${styles.add} ${styles.gotobasket}`}>Перейти в корзину</NavLink> :
+            <button className={styles.add} onClick={this.handleAddGoodToBasket}>Добавить в корзину</button>}
           </div>
         </div>
         <Footer />
@@ -66,4 +73,4 @@ class Item extends React.Component {
     );
   }
 }
-export default connect(null, actionCreators)(Item);
+export default connect(mapStateToProps, actionCreators)(Item);

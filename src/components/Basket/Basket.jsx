@@ -2,6 +2,9 @@ import React from "react";
 import styles from "./Basket.css";
 import * as actions from "../../actions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import {  getStr, getSum } from "../../utils"
+import Footer from "../Footer/Footer";
 
 const mapStateToProps = state => ({
   basket: state.basket
@@ -12,11 +15,7 @@ const actionCreators = {
   changeAmount: actions.changeAmount
 };
 
-const getNumber = str => Number(str.split(' ').join(''));
-
 const Basket = ({ basket, removeGood, changeAmount }) => {
-  const sum = basket.reduce((acc, { price, amount }) => acc + (getNumber(price) * amount), 0);
-
   const handleRemoveGood = id => () => {
     removeGood({ id });
     localStorage.removeItem(id);
@@ -25,7 +24,7 @@ const Basket = ({ basket, removeGood, changeAmount }) => {
   const handleChangeAmount = (id, amount, symbol) => () => {
     const item = basket.find(el => el.id === id);
     const updatedAmoumt = amount + symbol;
-    const newItem = { ...item, amount:   updatedAmoumt };
+    const newItem = { ...item, amount: updatedAmoumt };
     changeAmount({ id, amount, symbol });
     localStorage.setItem(id, JSON.stringify(newItem));
 
@@ -33,21 +32,32 @@ const Basket = ({ basket, removeGood, changeAmount }) => {
 
   const renderGoods = () => (
     <ul className={styles.goods}>
-      {basket.map(good => (
-        <li key={good.id} className={styles.good}>
+      {basket.map(({ id, name, amount, price, img })=> (
+        <li key={id} className={styles.good}>
           <div className={styles.good_item}>
-              <img className={styles.img} src={good.img} />
+              <img className={styles.img} src={img} />
               <div className={styles.information}>
-                <div>{good.name}</div>
-                <button onClick={handleRemoveGood(good.id)}>Удалить товар</button>
+              <Link to={`/catalog/${id}`} key={id} className={styles.link}>{name}</Link>
+                <button className={styles.remove} onClick={handleRemoveGood(id)}>удалить товар</button>
             </div>
           </div>
           <div className={styles.amount}>
-            <button  onClick={handleChangeAmount(good.id, good.amount, -1)}>-</button>
-            <input className={styles.number} type="text" value={good.amount}/>
-            <button onClick={handleChangeAmount(good.id, good.amount, 1)}>+</button>
+            <button 
+              className={styles.amount_btn} 
+              onClick={handleChangeAmount(id, amount, -1)}
+              disabled={amount === 1} 
+              id={`minus${id}`}
+            />
+            <label htmlFor={`minus${id}`}>-</label>
+            <input className={styles.number} type="text" value={amount}/>
+            <button
+              className={styles.amount_btn}
+              onClick={handleChangeAmount(id, amount, 1)}
+              id={`plus${id}`}
+            />
+             <label htmlFor={`plus${id}`}>+</label>
           </div>
-          <div className={styles.price}>{good.price}</div>
+          <div className={styles.price}>{`${price} RUB`}</div>
         </li>
       ))}
     </ul>
@@ -60,8 +70,9 @@ const Basket = ({ basket, removeGood, changeAmount }) => {
         <li className={styles.caption_price}>Цена</li>
       </ul>
       {renderGoods()}
-      <div className={styles.sum}>{`Сумма: ${sum}`}</div>
+      <div className={styles.sum}>{`Сумма: ${getStr(getSum(basket))} RUB`}</div>
+      <Footer />
     </div>
   );
 }
-export default connect(mapStateToProps, actionCreators)(Basket)
+export default connect(mapStateToProps, actionCreators)(Basket);
