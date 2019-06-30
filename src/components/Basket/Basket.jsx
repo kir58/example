@@ -1,67 +1,81 @@
-import React from "react";
-import styles from "./Basket.css";
-import * as actions from "../../actions";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import {  getStr, getSum } from "../../utils"
-import Footer from "../Footer/Footer";
+/* eslint-disable no-undef */
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import styles from './Basket.css';
+import * as actions from '../../actions';
+import { getStr, getSum } from '../../utils';
+import Footer from '../Footer/Footer';
 
 const mapStateToProps = state => ({
-  basket: state.basket
+  basket: state.basket,
 });
 
 const actionCreators = {
   removeGood: actions.removeGood,
-  changeAmount: actions.changeAmount
+  changeAmount: actions.changeAmount,
 };
 
 const Basket = ({ basket, removeGood, changeAmount }) => {
   const handleRemoveGood = id => () => {
     removeGood({ id });
     localStorage.removeItem(id);
-  }
+  };
 
   const handleChangeAmount = (id, amount, symbol) => () => {
     const item = basket.find(el => el.id === id);
     const updatedAmoumt = amount + symbol;
     const newItem = { ...item, amount: updatedAmoumt };
-    changeAmount({ id, amount, symbol });
+    changeAmount({ id, symbol });
     localStorage.setItem(id, JSON.stringify(newItem));
-
-  }
-
+  };
   const renderGoods = () => (
     <ul className={styles.goods}>
-      {basket.map(({ id, name, amount, price, img })=> (
+      {basket.map(({
+        id, name, amount, price, img,
+      }) => (
         <li key={id} className={styles.good}>
           <div className={styles.good_item}>
-              <img className={styles.img} src={img} />
-              <div className={styles.information}>
+            <img className={styles.img} src={img} alt="no img" />
+            <div className={styles.information}>
               <Link to={`/catalog/${id}`} key={id} className={styles.link}>{name}</Link>
-                <button className={styles.remove} onClick={handleRemoveGood(id)}>удалить товар</button>
+              <button type="button" className={styles.remove} onClick={handleRemoveGood(id)}>удалить товар</button>
             </div>
           </div>
           <div className={styles.amount}>
-            <button 
-              className={styles.amount_btn} 
+            <button
+              type="button"
+              className={styles.amount_btn}
               onClick={handleChangeAmount(id, amount, -1)}
-              disabled={amount === 1} 
+              disabled={amount === 1}
               id={`minus${id}`}
             />
             <label htmlFor={`minus${id}`}>-</label>
-            <input className={styles.number} type="text" value={amount}/>
+            <input className={styles.number} type="text" value={amount} onChange={() => {}} />
             <button
+              type="button"
               className={styles.amount_btn}
               onClick={handleChangeAmount(id, amount, 1)}
               id={`plus${id}`}
             />
-             <label htmlFor={`plus${id}`}>+</label>
+            <label htmlFor={`plus${id}`}>+</label>
           </div>
           <div className={styles.price}>{`${price} RUB`}</div>
         </li>
       ))}
     </ul>
-  )
+  );
+  if (basket.length === 0) {
+    return (
+      <div className={styles.wrapper}>
+        Ваша корзина пуста. Вы можете выбрать товар здесь:
+        <Link className={styles.link} to="/catalog"> Каталог</Link>
+      </div>
+    );
+  }
   return (
     <div className={styles.wrapper}>
       <ul className={styles.caption}>
@@ -74,5 +88,10 @@ const Basket = ({ basket, removeGood, changeAmount }) => {
       <Footer />
     </div>
   );
-}
+};
+Basket.propTypes = {
+  basket: PropTypes.array.isRequired,
+  removeGood: PropTypes.func.isRequired,
+  changeAmount: PropTypes.func.isRequired,
+};
 export default connect(mapStateToProps, actionCreators)(Basket);

@@ -1,59 +1,59 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const combineLoaders = require("webpack-combine-loaders");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const combineLoaders = require('webpack-combine-loaders');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
-    path: path.join(__dirname, "/dist"),
-    filename: "index-bundle.js",
+    path: path.join(__dirname, '/dist'),
+    filename: 'index-bundle.js',
   },
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
+        use: ['babel-loader'],
       },
       {
         test: /\.css$/,
         loader: combineLoaders([
           {
-            loader: "style-loader"
+            loader: 'style-loader',
           },
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             query: {
               modules: true,
-              localIdentName: "[name]__[local]___[hash:base64:5]"
-            }
-          }
-        ])
+              localIdentName: '[name]__[local]___[hash:base64:5]',
+            },
+          },
+        ]),
       },
       {
         test: /\.(png|jpg|svg|gif)$/,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
-              name: "[path][name].[ext]"
-            }
-          }
-        ]
-      }
-    ]
+              name: '[path][name].[ext]',
+            },
+          },
+        ],
+      },
+    ],
   },
   devServer: {
-    stats: "errors-only",
-    contentBase: "./dist",
+    stats: 'errors-only',
+    contentBase: './dist',
     historyApiFallback: {
-      disableDotRule: true
+      disableDotRule: true,
     },
-    port: 3000
+    port: 3000,
   },
   optimization: {
     minimize: true,
@@ -70,7 +70,7 @@ module.exports = {
             loops: true,
             drop_debugger: true,
           },
-          "warnings": true,
+          warnings: true,
           output: {
             comments: false,
           },
@@ -80,7 +80,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html"
-    })
-  ]
+      template: './src/index.html',
+    }),
+  ],
 };

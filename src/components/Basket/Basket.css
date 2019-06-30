@@ -2,6 +2,7 @@
 	font-size: 22px;
 }
 .remove {
+	display: block;
   padding: 15px;
   cursor: pointer;
   background-color: rgb(233, 2, 2);
@@ -58,6 +59,7 @@
 	display: flex;
 	justify-content: flex-start;
 	align-items: flex-start;
+	flex-wrap: wrap;
 	padding: 10px 0;
 	font-size: 18px;
 }
@@ -117,6 +119,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	text-align: center;
 }
 
 .caption_price {
@@ -138,4 +141,18 @@
 
 .link:hover {
 	color: #cdcdcd;
+}
+
+@media screen and (max-width: 480px) {
+  .wrapper {
+		font-size: 18px;
+	}
+	.good_item {
+		justify-content: center;
+	}
+	.information {
+		width: 100%;
+		justify-content: flex-start;
+		margin-top: 5px;
+	}
 }

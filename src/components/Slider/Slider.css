@@ -12,7 +12,7 @@
   position: absolute;
   white-space: nowrap;
   height: 100%;
-  width: 100%;
+  margin: 0 auto;
   
 }
 .active {
@@ -126,3 +126,36 @@
   background-color: rgb(197, 184, 184);
 }
 
+@media screen and (max-width: 480px) {
+  .slider {
+    height: 200px;
+  }
+  .arrow {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .arrow::before {
+    width: 10px;
+    height: 10px;
+    border-left: 2px solid rgb(255, 255, 255);
+    border-bottom: 2px solid rgb(255, 255, 255);
+  }
+
+  .arrow.leftArrow::before  {
+    margin-left: calc(50% - 4px);
+  }
+
+  .arrow.rightArrow::before {
+    margin-left: calc(50% - 10px);
+  }
+
+  .radio:checked + .radioLabel::after {
+    width: 9px;
+    height: 9px;
+  }
+  .radioLabel {
+    width: 15px;
+    height: 15px;
+  }
+}
