@@ -8,7 +8,7 @@ export const changeAmount = createAction('CHANGE_AMOUNT');
 
 export const getInitState = () => (dispatch) => {
   const keys = Object.keys(localStorage).filter(
-    key => key !== 'loglevel:webpack-dev-server',
+    key => key.indexOf('el') === 0,
   );
   const initState = keys.map(key => JSON.parse(localStorage[key]));
   dispatch(getGoods({ basket: initState }));

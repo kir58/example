@@ -1,4 +1,4 @@
-export const getNumber = str => Number(str.split(' ').join(''));
+export const getNumber = str => (str ? Number(str.split(' ').join('')) : 0);
 
 export const getStr = (num) => {
   const reg = /(\d)(?=(\d\d\d)+\b)/ig;
