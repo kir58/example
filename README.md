@@ -4,7 +4,7 @@
 
 ## Технологии
 - React, React-Router-Dom, React-Redux
-- Redux, Redux-Thunk, Redux-Form, Redux-Actions
+- Redux, Redux-Thunk, Redux-Actions
 - Webpack, Git, GitHub, ESLint
 - Axios, Prop-Types, Classnames
 - LocalStorage
