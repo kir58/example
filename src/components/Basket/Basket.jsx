@@ -66,8 +66,8 @@ const Basket = ({ basket, removeGood, changeAmount }) => {
   if (basket.length === 0) {
     return (
       <div className={styles.wrapper}>
-        Ваша корзина пуста. Вы можете выбрать товар здесь:
-        <Link className={styles.link} to="/catalog"> Каталог</Link>
+        Ваша корзина пуста. Вы можете выбрать товар
+        <Link className={styles.link} to="/catalog">здесь</Link>
       </div>
     );
   }

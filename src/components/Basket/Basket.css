@@ -136,7 +136,8 @@
 
 .link {
 	text-decoration: none;
-	color: inherit;
+	color: rgb(2, 153, 2);
+	margin-left: 5px;
 }
 
 .link:hover {
