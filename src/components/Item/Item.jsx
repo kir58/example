@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -30,7 +29,7 @@ class Item extends React.Component {
     this.setState({ fetchingState: 'requested' });
     const { match: { params: { id } } } = this.props;
     try {
-      const item = await axios.get(`https://anton-sergeenkov.ru/app/json-server/index.php?id=${id}`);
+      const item = await axios.get(`http://webmastered.ru/app/json-server/index.php?id=${id}`);
       this.setState({ item: item.data, fetchingState: 'finished' });
     } catch (e) {
       this.setState({ fetchingState: 'failed' });
@@ -41,7 +40,6 @@ class Item extends React.Component {
     const { addGood } = this.props;
     const { item } = this.state;
     const updateItem = { amount: 1, ...item };
-    localStorage.setItem(item.id, JSON.stringify(updateItem));
     addGood({ item: updateItem });
   }
 

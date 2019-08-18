@@ -1,29 +1,30 @@
 /* eslint-disable no-undef */
+import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import { getInitState } from './actions';
 import reducers from './reducers';
 import App from './components/App/App';
 
-
-/* eslint-disable no-underscore-dangle */
-// const ext = window.__REDUX_DEVTOOLS_EXTENSION__;
-// const devtoolMiddleware = ext && ext();
-/* eslint-enable */
+const basket = {
+  basket: localStorage.getItem('basket')
+    ? JSON.parse(localStorage.getItem('basket')) : [],
+};
 const store = createStore(
   reducers,
-  compose(
+  basket,
+  composeWithDevTools(
     applyMiddleware(thunk),
-    // devtoolMiddleware
   ),
 );
 
-store.dispatch(getInitState());
-/* eslint-enable */
-
+store.subscribe(() => {
+  const { basket } = store.getState();
+  localStorage.setItem('basket', JSON.stringify(basket));
+});
 ReactDOM.render(
   // eslint-disable-next-line react/jsx-filename-extension
   <Provider store={store}>

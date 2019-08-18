@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '@babel/polyfill';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -24,7 +24,7 @@ class Catalog extends React.Component {
   getItems = async () => {
     this.setState({ fetchingState: 'requested' });
     try {
-      const items = await axios.get('https://anton-sergeenkov.ru/app/json-server/index.php');
+      const items = await axios.get('http://webmastered.ru/app/json-server/index.php');
       this.setState({ items: items.data, fetchingState: 'finished' });
     } catch (e) {
       this.setState({ fetchingState: 'failed' });
